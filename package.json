@@ -1,0 +1,28 @@
+{
+  "name": "card-game-api",
+  "version": "1.0.0",
+  "description": "learning to build an API with node, express, and passport",
+  "homepage": "https://github.com/TracerAdams-alt/card-game-API#readme",
+  "bugs": {
+    "url": "https://github.com/TracerAdams-alt/card-game-API/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TracerAdams-alt/card-game-API.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
+  }
+}
