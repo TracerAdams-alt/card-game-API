@@ -1,19 +1,29 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
+const User = require('../models/user'); // Make sure this path is correct
 
-const users = require('../routes/auth').users; // temp; eventually pull from DB
-
-passport.use(new LocalStrategy((username, password, done) => {
-  const user = users.find(u => u.username === username);
-  if (!user || !bcrypt.compareSync(password, user.password)) {
-    return done(null, false, { message: 'Invalid credentials' });
+passport.use(new LocalStrategy(async (username, password, done) => {
+  try {
+    const user = await User.findOne({ username });
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+      return done(null, false, { message: 'Invalid credentials' });
+    }
+    return done(null, user);
+  } catch (err) {
+    return done(err);
   }
-  return done(null, user);
 }));
 
-passport.serializeUser((user, done) => done(null, user.username));
-passport.deserializeUser((username, done) => {
-  const user = users.find(u => u.username === username);
-  done(null, user);
+passport.serializeUser((user, done) => {
+  done(null, user.id); // use MongoDB _id
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
 });
